@@ -1,0 +1,19 @@
+version: '3.7'
+services:
+  kalilinux:
+    hostname: kalilinux.lab
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: 'kalilinux:web'
+    restart: always
+    ports:
+      - 0.0.0.0:80:80
+    working_dir: /root
+    environment:
+      - SHELL=/bin/bash
+      - VNC_PASSWORD=kalilinux
+    volumes:
+      - /dev/null:/usr/share/novnc/index.html
+      - ./startup.sh:/startup.sh
+    command: /bin/bash /startup.sh
