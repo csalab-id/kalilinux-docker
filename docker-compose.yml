@@ -5,7 +5,7 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    image: 'kalilinux:web'
+    image: 'csalab/kalilinux-docker:latest'
     restart: always
     cap_add:
       - NET_ADMIN
@@ -15,4 +15,4 @@ services:
     environment:
       - SHELL=/bin/bash
       - PASSWORD=kalilinux
-    command: /bin/bash /startup.sh
+    entrypoint: ["/bin/bash", "/startup.sh"]
