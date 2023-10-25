@@ -1,0 +1,25 @@
+version: 2.1
+
+executors:
+  docker:
+    docker:
+      - image: docker:stable
+
+jobs:
+  build-image:
+    executor: docker
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Build image
+          command: |
+            echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+            docker build -t csalab/kalilinux-docker:latest .
+            docker push csalab/kalilinux-docker:latest
+
+workflows:
+  version: 2
+  kalilinux:
+    jobs:
+      - build-image
