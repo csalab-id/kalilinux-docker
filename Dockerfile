@@ -1,6 +1,7 @@
 FROM kalilinux/kali-rolling:latest
 LABEL maintainer="admin@csalab.id"
-RUN apt-get update && \
+RUN sed -i "s/http.kali.org/mirrors.ocf.berkeley.edu/g" /etc/apt/sources.list && \
+    apt-get update && \
     apt-get -y upgrade
 RUN DEBIAN_FRONTEND=noninteractive apt-get -yq install \
     sudo \
