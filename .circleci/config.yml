@@ -11,7 +11,6 @@ executors:
   docker:
     docker:
       - image: cimg/base:stable
-    parallelism: 4
     resource_class: large
 
 jobs:
