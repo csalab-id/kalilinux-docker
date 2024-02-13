@@ -10,7 +10,7 @@ parameters:
 executors:
   docker:
     docker:
-      - image: docker:stable
+      - image: cimg/base:stable
 
 jobs:
   hadolint:
