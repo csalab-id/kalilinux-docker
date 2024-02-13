@@ -11,8 +11,7 @@ services:
       - NET_ADMIN
     ports:
       - 0.0.0.0:8080:8080
-    working_dir: /root
     environment:
       - SHELL=/bin/bash
-      - PASSWORD=kalilinux
+      - PASSWORD=${PASSWORD:-kalilinux}
     entrypoint: ["/bin/bash", "/startup.sh"]
