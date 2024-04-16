@@ -2,7 +2,7 @@
 
 This repository contains a Docker Compose application that runs single containers to provide a kali linux desktop on the browser.
 
-![Screenshoot](screenshoot.png)
+![Screenshoot](.github/images/screenshoot.png)
 
 # Description
 
@@ -20,14 +20,32 @@ To run this Docker Compose application, you need to have the following software 
 - Docker Compose
 
 # Usage
+To start the Kali Linux desktop in a browser, follow these steps:
 
-To start the application, run the following command in the root directory of the repository:
-```
-docker-compose up
-```
-This will start all the containers and you should be able to access the web application at http://localhost:8080/vnc.html
+1. Clone the repository:
+    ```
+    git clone https://github.com/csalab-id/kalilinux-docker.git
+    ```
+2. Navigate to the repository directory:
+    ```
+    cd kalilinux-docker
+    ```
+3. Pull the required Docker images:
+    ```
+    docker-compose pull
+    ```
+4. Set the password for the environment:
+    ```
+    export PASSWORD="YourVNCPassword"
+    ```
+5. Start the containers:
+    ```
+    docker-compose up
+    ```
 
-To stop the application, press CTRL+C in the terminal window where you started the application or run the following command:
+This will start all the containers, and you should be able to access the web application at http://localhost:8080/vnc.html
+
+To stop the application, you can either press CTRL+C in the terminal window where you started the application or run the following command:
 ```
 docker-compose down
 ```
@@ -51,14 +69,6 @@ This Docker Compose application exposes the following ports:
 - 8080: A custom port used to access the web application (NoVNC) running in the Kalilinux container.
 
 When you start the application using docker-compose up, these ports will be exposed on your local machine. You can access the web application by opening a web browser and navigating to http://localhost:8080/vnc.html
-
-# Configuration
-
-The Docker Compose application can be configured by editing the docker-compose.yml file in the root directory of the repository.
-
-You can change the following settings:
-
-- The VNC/SSH root password (PASSWORD)
 
 # License
 
