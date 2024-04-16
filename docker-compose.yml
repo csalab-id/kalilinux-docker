@@ -14,4 +14,9 @@ services:
     environment:
       - SHELL=/bin/bash
       - PASSWORD=${PASSWORD:-kalilinux}
+    volumes:
+      - data:/home/kali/Desktop
     entrypoint: ["/bin/bash", "/startup.sh"]
+
+volumes:
+  data: {}
