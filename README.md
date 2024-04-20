@@ -58,6 +58,17 @@ docker-compose up -d
 ```
 This will start all the containers in detached mode and return control to the terminal. You can use the docker-compose logs command to view the logs for the running containers.
 
+If you have limited disk space on your computer, you can opt for an alternative image version with a smaller size. You can try the following commands:
+```
+export VERSION=slim
+docker-compose pull
+docker-compose up -d
+```
+
+By setting the VERSION environment variable to "slim", the docker-compose pull command will fetch the smaller-sized image. Then, you can use docker-compose up -d to start the environment.
+
+This approach allows you to conserve disk space while still being able to run the environment effectively.
+
 To stop the application when running in detached mode, you can use the docker-compose down command. This will stop and remove all the containers, networks, and volumes associated with the application.
 
 Note that when running in detached mode, you will not see any log output in the terminal window. You will need to use the docker-compose logs command to view the logs.
