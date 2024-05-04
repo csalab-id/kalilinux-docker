@@ -6,6 +6,15 @@ fi
 if [ ! -f ~/.Xauthority ]; then
     touch ~/.Xauthority
 fi
+
+cat << EOF > ~/.vnc/xstartup
+#!/bin/sh
+unset SESSION_MANAGER
+burpsuite &
+exec openbox-session
+EOF
+
+chmod 755 ~/.vnc/xstartup
 rm -rf ~/.vnc/*.pid ~/.vnc/*.log /tmp/.X1*
 vncpasswd -f <<< ${PASSWORD} > ~/.vnc/passwd
 vncserver -PasswordFile ~/.vnc/passwd

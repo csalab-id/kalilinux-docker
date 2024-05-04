@@ -5,7 +5,7 @@ parameters:
     type: enum
     default: auto
     description: The workflow to trigger.
-    enum: [auto, latest, slim, all]
+    enum: [auto, burpsuite]
 
 executors:
   docker:
@@ -22,7 +22,7 @@ jobs:
       - run:
           name: Checking Dockerfile code quality
           command: docker run --rm -i ghcr.io/hadolint/hadolint:latest < Dockerfile || true
-  build-kalilinux:
+  build-burpsuite:
     executor: docker
     steps:
       - checkout
@@ -35,27 +35,9 @@ jobs:
             docker context create buildx-build
             docker buildx create --use buildx-build
             docker buildx build --push \
-              --tag $DOCKER_REGISTRY/$REGISTRY_USER/kalilinux-docker:latest \
+              --tag $DOCKER_REGISTRY/$REGISTRY_USER/kalilinux-docker:burpsuite \
               --platform linux/amd64,linux/arm64 \
               -f Dockerfile .
-  build-kalilinux-slim:
-    executor: docker
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run:
-          name: Build image
-          command: |
-            echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin $DOCKER_REGISTRY
-            cp Dockerfile Dockerfile-slim
-            sed -i "s/kali-linux-large/# kali-linux-large/g" Dockerfile-slim
-            export DOCKER_CLI_EXPERIMENTAL=enabled
-            docker context create buildx-build
-            docker buildx create --use buildx-build
-            docker buildx build --push \
-              --tag $DOCKER_REGISTRY/$REGISTRY_USER/kalilinux-docker:slim \
-              --platform linux/amd64,linux/arm64 \
-              -f Dockerfile-slim .
 
 workflows:
   version: 2
@@ -63,27 +45,10 @@ workflows:
     when: { equal: [ auto, << pipeline.parameters.workflow >> ] }
     jobs:
       - hadolint
-  build-latest:
-    when: { equal: [ latest, << pipeline.parameters.workflow >> ] }
+  build-burpsuite:
+    when: { equal: [ burpsuite, << pipeline.parameters.workflow >> ] }
     jobs:
       - hadolint
-      - build-kalilinux:
-          requires:
-            - hadolint
-  build-slim:
-    when: { equal: [ slim, << pipeline.parameters.workflow >> ] }
-    jobs:
-      - hadolint
-      - build-kalilinux-slim:
-          requires:
-            - hadolint
-  build-all:
-    when: { equal: [ all, << pipeline.parameters.workflow >> ] }
-    jobs:
-      - hadolint
-      - build-kalilinux:
-          requires:
-            - hadolint
-      - build-kalilinux-slim:
+      - build-burpsuite:
           requires:
             - hadolint
