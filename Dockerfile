@@ -24,4 +24,5 @@ WORKDIR /home/kali
 ENV VNC_PASSWORD=burpsuite
 ENV SHELL=/bin/bash
 EXPOSE 6080
+EXPOSE 8080
 ENTRYPOINT ["/bin/bash", "/startup.sh"]
