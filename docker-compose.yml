@@ -5,7 +5,7 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    image: 'csalab/kalilinux-docker:${VERSION:-latest}'
+    image: 'csalab/kalilinux-docker:${VERSION:-burpsuite}'
     restart: always
     cap_add:
       - NET_ADMIN
@@ -13,7 +13,7 @@ services:
       - 0.0.0.0:8080:8080
     environment:
       - SHELL=/bin/bash
-      - PASSWORD=${PASSWORD:-kalilinux}
+      - PASSWORD=${PASSWORD:-burpsuite}
     volumes:
       - data:/home/kali/Desktop
     entrypoint: ["/bin/bash", "/startup.sh"]

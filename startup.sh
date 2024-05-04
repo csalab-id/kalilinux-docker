@@ -10,7 +10,7 @@ fi
 cat << EOF > ~/.vnc/xstartup
 #!/bin/sh
 unset SESSION_MANAGER
-burpsuite &
+burpsuite --use-defaults &
 exec openbox-session
 EOF
 
