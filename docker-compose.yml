@@ -1,22 +1,15 @@
 version: '3.7'
 services:
   kalilinux:
-    hostname: kalilinux.lab
+    hostname: burpsuite.lab
     build:
       context: ./
       dockerfile: Dockerfile
     image: 'csalab/kalilinux-docker:${VERSION:-burpsuite}'
     restart: always
-    cap_add:
-      - NET_ADMIN
     ports:
-      - 0.0.0.0:8080:8080
+      - 0.0.0.0:6080:6080
     environment:
       - SHELL=/bin/bash
       - PASSWORD=${PASSWORD:-burpsuite}
-    volumes:
-      - data:/home/kali/Desktop
     entrypoint: ["/bin/bash", "/startup.sh"]
-
-volumes:
-  data: {}
