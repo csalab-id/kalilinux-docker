@@ -3,14 +3,14 @@ services:
   kalilinux:
     hostname: kalilinux.lab
     build:
-      context: ./
-      dockerfile: Dockerfile
-    image: 'csalab/kalilinux-docker:${VERSION:-latest}'
+      context: .
+      dockerfile: Dockerfile_arm64
     restart: always
     cap_add:
       - NET_ADMIN
     ports:
       - 0.0.0.0:8080:8080
+      - 0.0.0.0:2222:22
     environment:
       - SHELL=/bin/bash
       - PASSWORD=${PASSWORD:-kalilinux}
