@@ -1,4 +1,4 @@
-# Kali Linux desktop on the browser
+# Kali Linux desktop on the browser (ARM64)
 
 This repository contains a Docker Compose application that runs single containers to provide a kali linux desktop on the browser.
 
@@ -8,7 +8,7 @@ This repository contains a Docker Compose application that runs single container
 
 This Docker Compose application includes the following containers:
 
-- Kalilinux: A web server running NoVNC with Kali Linux Desktop environment.
+- Kalilinux: A web server running NoVNC (which can be accessed via Browser) with Kali Linux Desktop environment.
 
 Default password for this container is: kalilinux
 
@@ -78,6 +78,7 @@ Note that when running in detached mode, you will not see any log output in the 
 This Docker Compose application exposes the following ports:
 
 - 8080: A custom port used to access the web application (NoVNC) running in the Kalilinux container.
+- 22: OpenSSH
 
 When you start the application using docker-compose up, these ports will be exposed on your local machine. You can access the web application by opening a web browser and navigating to http://localhost:8080/vnc.html
 
