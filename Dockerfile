@@ -1,5 +1,4 @@
 FROM kalilinux/kali-rolling:latest
-LABEL maintainer="admin@csalab.id"
 RUN sed -i "s/http.kali.org/mirrors.ocf.berkeley.edu/g" /etc/apt/sources.list && \
     apt-get update && \
     apt-get -y upgrade
@@ -17,7 +16,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -yq install \
     tigervnc-xorg-extension \
     tigervnc-viewer \
     novnc \
-    dbus-x11
+    dbus-x11 \
+    openvpn \
+    wireguard
 RUN DEBIAN_FRONTEND=noninteractive apt-get -yq install \
     xfce4-goodies \
     kali-linux-large \
@@ -36,5 +37,6 @@ USER kali
 WORKDIR /home/kali
 ENV PASSWORD=kalilinux
 ENV SHELL=/bin/bash
-EXPOSE 8080
+EXPOSE 8080/tcp
+EXPOSE 22/tcp
 ENTRYPOINT ["/bin/bash", "/startup.sh"]
