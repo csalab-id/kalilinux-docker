@@ -42,6 +42,16 @@ To start the Kali Linux desktop in a browser, follow these steps:
     ```
     docker-compose up
     ```
+Too Laxy then you can start kali linux in one click
+```
+git clone https://github.com/csalab-id/kalilinux-docker.git
+cd kalilinux-docker
+docker-compose pull
+export PASSWORD="P@$$W0rd"
+docker-compose up
+```
+Feel free to change the VNC Password
+
 
 This will start all the containers, and you should be able to access the web application at http://localhost:8080/vnc.html
 
