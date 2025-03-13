@@ -4,7 +4,7 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    image: 'csalab/kalilinux-docker:${VERSION:-latest}'
+    image: 'csalab/kalilinux-docker:${VERSION:-slim}'
     restart: always
     cap_add:
       - NET_ADMIN
