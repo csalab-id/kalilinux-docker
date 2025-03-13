@@ -32,7 +32,7 @@ To start the Kali Linux desktop in a browser, follow these steps:
     ```
 3. Pull the required Docker images:
     ```
-    docker-compose pull
+    docker compose pull
     ```
 4. Set the password for the environment:
     ```
@@ -40,38 +40,38 @@ To start the Kali Linux desktop in a browser, follow these steps:
     ```
 5. Start the containers:
     ```
-    docker-compose up
+    docker compose up
     ```
 
 This will start all the containers, and you should be able to access the web application at http://localhost:8080/vnc.html
 
 To stop the application, you can either press CTRL+C in the terminal window where you started the application or run the following command:
 ```
-docker-compose down
+docker compose down
 ```
 
 ## Running in Detached Mode
 
-By default, when you run docker-compose up, the application will start in the foreground and log output will be displayed in the terminal window. If you want to run the application in the background, you can use the -d (or --detach) option. For example:
+By default, when you run docker compose up, the application will start in the foreground and log output will be displayed in the terminal window. If you want to run the application in the background, you can use the -d (or --detach) option. For example:
 ```
-docker-compose up -d
+docker compose up -d
 ```
-This will start all the containers in detached mode and return control to the terminal. You can use the docker-compose logs command to view the logs for the running containers.
+This will start all the containers in detached mode and return control to the terminal. You can use the docker compose logs command to view the logs for the running containers.
 
 If you have limited disk space on your computer, you can opt for an alternative image version with a smaller size. You can try the following commands:
 ```
 export VERSION=slim
-docker-compose pull
-docker-compose up -d
+docker compose pull
+docker compose up -d
 ```
 
-By setting the VERSION environment variable to "slim", the docker-compose pull command will fetch the smaller-sized image. Then, you can use docker-compose up -d to start the environment.
+By setting the VERSION environment variable to "slim", the docker compose pull command will fetch the smaller-sized image. Then, you can use docker compose up -d to start the environment.
 
 This approach allows you to conserve disk space while still being able to run the environment effectively.
 
-To stop the application when running in detached mode, you can use the docker-compose down command. This will stop and remove all the containers, networks, and volumes associated with the application.
+To stop the application when running in detached mode, you can use the docker compose down command. This will stop and remove all the containers, networks, and volumes associated with the application.
 
-Note that when running in detached mode, you will not see any log output in the terminal window. You will need to use the docker-compose logs command to view the logs.
+Note that when running in detached mode, you will not see any log output in the terminal window. You will need to use the docker compose logs command to view the logs.
 
 # Exposed Ports
 
@@ -79,7 +79,7 @@ This Docker Compose application exposes the following ports:
 
 - 8080: A custom port used to access the web application (NoVNC) running in the Kalilinux container.
 
-When you start the application using docker-compose up, these ports will be exposed on your local machine. You can access the web application by opening a web browser and navigating to http://localhost:8080/vnc.html
+When you start the application using docker compose up, these ports will be exposed on your local machine. You can access the web application by opening a web browser and navigating to http://localhost:8080/vnc.html
 
 # License
 
