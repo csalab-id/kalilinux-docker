@@ -4,8 +4,8 @@ parameters:
   workflow:
     type: enum
     default: auto
-    description: The workflow to trigger.
-    enum: [auto, latest, slim, all]
+    description: "The workflow to trigger."
+    enum: [auto, latest]
 
 executors:
   docker:
@@ -20,15 +20,16 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
-          name: Checking Dockerfile code quality
+          name: "Checking Dockerfile code quality"
           command: docker run --rm -i ghcr.io/hadolint/hadolint:latest < Dockerfile || true
+
   build-kalilinux:
     executor: docker
     steps:
       - checkout
       - setup_remote_docker
       - run:
-          name: Build image
+          name: "Build and push multi-architecture image"
           command: |
             echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin $DOCKER_REGISTRY
             export DOCKER_CLI_EXPERIMENTAL=enabled
@@ -38,68 +39,33 @@ jobs:
               --tag $DOCKER_REGISTRY/$REGISTRY_USER/kalilinux-docker:latest \
               --platform linux/amd64,linux/arm64 \
               -f Dockerfile .
-  build-kalilinux-slim:
-    executor: docker
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run:
-          name: Build image
-          command: |
-            echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin $DOCKER_REGISTRY
-            cp Dockerfile Dockerfile-slim
-            sed -i "s/kali-linux-large/# kali-linux-large/g" Dockerfile-slim
-            export DOCKER_CLI_EXPERIMENTAL=enabled
-            docker context create buildx-build
-            docker buildx create --use buildx-build
-            docker buildx build --push \
-              --tag $DOCKER_REGISTRY/$REGISTRY_USER/kalilinux-docker:slim \
-              --platform linux/amd64,linux/arm64 \
-              -f Dockerfile-slim .
 
 workflows:
-  version: 2
   build-auto:
-    when: { equal: [ auto, << pipeline.parameters.workflow >> ] }
+    when: 
+      equal: [auto, << pipeline.parameters.workflow >>]
     jobs:
       - hadolint
+
   build-latest:
-    when: { equal: [ latest, << pipeline.parameters.workflow >> ] }
+    when:
+      equal: [latest, << pipeline.parameters.workflow >>]
     jobs:
       - hadolint
       - build-kalilinux:
           requires:
             - hadolint
-  build-slim:
-    when: { equal: [ slim, << pipeline.parameters.workflow >> ] }
-    jobs:
-      - hadolint
-      - build-kalilinux-slim:
-          requires:
-            - hadolint
-  build-all:
-    when: { equal: [ all, << pipeline.parameters.workflow >> ] }
+
+  build-weekly:
+    triggers:
+      - schedule:
+          cron: "0 0 * * 0"
+          filters:
+            branches:
+              only:
+                - main
     jobs:
       - hadolint
       - build-kalilinux:
           requires:
             - hadolint
-      - build-kalilinux-slim:
-          requires:
-            - hadolint
-  # build-all-auto:
-  #   triggers:
-  #     - schedule:
-  #         cron: "0 0 * * 0"
-  #         filters:
-  #           branches:
-  #             only:
-  #               - main
-  #   jobs:
-  #     - hadolint
-  #     - build-kalilinux:
-  #         requires:
-  #           - hadolint
-  #     - build-kalilinux-slim:
-  #         requires:
-  #           - hadolint
