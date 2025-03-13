@@ -1,90 +1,75 @@
-# Kali Linux desktop on the browser
+# Kali Linux Desktop on the Browser
 
-This repository contains a Docker Compose application that runs single containers to provide a kali linux desktop on the browser.
+This repository contains a Docker Compose application that runs a Kali Linux desktop accessible through your web browser via NoVNC.
 
-![Screenshoot](.github/images/screenshoot.png)
+![Screenshot](.github/images/screenshoot.png)
 
-# Description
+## Description
 
-This Docker Compose application includes the following containers:
+This Docker Compose application provides:
 
-- Kalilinux: A web server running NoVNC with Kali Linux Desktop environment.
+- **Kali Linux**: A web server running NoVNC with Kali Linux Desktop environment.
+  - Default password: `kalilinux`
+  - Default exposed port: `8080`
 
-Default password for this container is: kalilinux
+## Requirements
 
-# Requirements
-
-To run this Docker Compose application, you need to have the following software installed on your machine:
+To run this application, you need:
 
 - Docker Engine
 - Docker Compose
 
-# Usage
-To start the Kali Linux desktop in a browser, follow these steps:
+## Usage
+
+### Quick Start
 
 1. Clone the repository:
-    ```
-    git clone https://github.com/csalab-id/kalilinux-docker.git
-    ```
+   ```bash
+   git clone https://github.com/csalab-id/kalilinux-docker.git
+   ```
+
 2. Navigate to the repository directory:
-    ```
-    cd kalilinux-docker
-    ```
+   ```bash
+   cd kalilinux-docker
+   ```
+
 3. Pull the required Docker images:
-    ```
-    docker compose pull
-    ```
-4. Set the password for the environment:
-    ```
-    export PASSWORD="YourVNCPassword"
-    ```
-5. Start the containers:
-    ```
-    docker compose up
-    ```
+   ```bash
+   docker compose pull
+   ```
 
-This will start all the containers, and you should be able to access the web application at http://localhost:8080/vnc.html
+4. Set a custom password for the environment (optional):
+   ```bash
+   export PASSWORD="YourVNCPassword"
+   ```
 
-To stop the application, you can either press CTRL+C in the terminal window where you started the application or run the following command:
-```
-docker compose down
-```
+5. Start the containers in detached mode:
+   ```bash
+   docker compose up -d
+   ```
 
-## Running in Detached Mode
+6. Access the web application at: http://localhost:8080/vnc.html
 
-By default, when you run docker compose up, the application will start in the foreground and log output will be displayed in the terminal window. If you want to run the application in the background, you can use the -d (or --detach) option. For example:
-```
+## Environment Variables
+
+You can customize the application using these environment variables:
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `PASSWORD` | VNC password | `kalilinux` |
+| `BIND` | Address and port to bind the server (format: IP:PORT) | `0.0.0.0:8080` |
+
+Example usage:
+```bash
+export PASSWORD="mysecretpassword"
+export BIND="0.0.0.0:9090"
 docker compose up -d
 ```
-This will start all the containers in detached mode and return control to the terminal. You can use the docker compose logs command to view the logs for the running containers.
 
-If you have limited disk space on your computer, you can opt for an alternative image version with a smaller size. You can try the following commands:
-```
-export VERSION=slim
-docker compose pull
-docker compose up -d
-```
-
-By setting the VERSION environment variable to "slim", the docker compose pull command will fetch the smaller-sized image. Then, you can use docker compose up -d to start the environment.
-
-This approach allows you to conserve disk space while still being able to run the environment effectively.
-
-To stop the application when running in detached mode, you can use the docker compose down command. This will stop and remove all the containers, networks, and volumes associated with the application.
-
-Note that when running in detached mode, you will not see any log output in the terminal window. You will need to use the docker compose logs command to view the logs.
-
-# Exposed Ports
-
-This Docker Compose application exposes the following ports:
-
-- 8080: A custom port used to access the web application (NoVNC) running in the Kalilinux container.
-
-When you start the application using docker compose up, these ports will be exposed on your local machine. You can access the web application by opening a web browser and navigating to http://localhost:8080/vnc.html
-
-# License
+## License
 
 This Docker Compose application is released under the MIT License. See the [LICENSE](https://www.mit.edu/~amini/LICENSE.md) file for details.
 
-# Disclaimer
+## Disclaimer
 
-The software developed and distributed for hacking purposes is intended for educational and testing purposes only. The use of this software for any illegal activity is strictly prohibited. The developers and distributors of the software are not liable for any damages or legal consequences resulting from the misuse of the software.
+The software developed and distributed for hacking purposes is intended for **educational and testing purposes only**. The use of this software for any illegal activity is strictly prohibited. The developers and distributors of the software are not liable for any damages or legal consequences resulting from the misuse of the software.
