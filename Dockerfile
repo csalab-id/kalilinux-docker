@@ -29,6 +29,7 @@ RUN apt-get -y autoremove && \
     sed -i "s/#ListenAddress 0.0.0.0/ListenAddress 0.0.0.0/g" /etc/ssh/sshd_config && \
     sed -i "s/off/remote/g" /usr/share/novnc/app/ui.js && \
     echo "kali ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+    mkdir /run/dbus && \
     touch /usr/share/novnc/index.htm
 COPY startup.sh /startup.sh
 USER kali
