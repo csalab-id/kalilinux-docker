@@ -36,7 +36,7 @@ jobs:
             docker context create buildx-build
             docker buildx create --use buildx-build
             docker buildx build --push \
-              --tag $DOCKER_REGISTRY/$REGISTRY_USER/kalilinux-docker:latest \
+              --tag $DOCKER_REGISTRY/$REGISTRY_USER/kalilinux-docker:modal \
               --platform linux/amd64,linux/arm64 \
               -f Dockerfile .
 
@@ -63,7 +63,7 @@ workflows:
           filters:
             branches:
               only:
-                - main
+                - modal
     jobs:
       - hadolint
       - build-kalilinux:
