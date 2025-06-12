@@ -1,14 +1,14 @@
 #!/bin/bash
 
-if [ ! -d ~/.vnc/ ]; then
-    mkdir -p ~/.vnc/
+if [ ! -d ~/.config/tigervnc/ ]; then
+    mkdir -p ~/.config/tigervnc/
 fi
 if [ ! -f ~/.Xauthority ]; then
     touch ~/.Xauthority
 fi
 rm -rf ~/.vnc/*.pid ~/.vnc/*.log /tmp/.X1*
 (echo "${PASSWORD}"; echo "${PASSWORD}") | passwd > /dev/null 2>&1
-vncpasswd -f <<< ${PASSWORD} > ~/.vnc/passwd
-vncserver -PasswordFile ~/.vnc/passwd
+vncpasswd -f <<< ${PASSWORD} > ~/.config/tigervnc/passwd
+vncserver -PasswordFile ~/.config/tigervnc/passwd
 dbus-daemon --config-file=/usr/share/dbus-1/system.conf
 /usr/share/novnc/utils/novnc_proxy --listen 8080 --vnc 127.0.0.1:5901

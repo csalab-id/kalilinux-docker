@@ -9,6 +9,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -yq install \
     python2 \
     python3-pip \
     python3-virtualenv \
+    python3-fastapi \
     dialog \
     firefox-esr \
     inetutils-ping \
