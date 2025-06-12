@@ -55,17 +55,3 @@ workflows:
       - build-kalilinux:
           requires:
             - hadolint
-
-  build-weekly:
-    triggers:
-      - schedule:
-          cron: "0 0 * * 0"
-          filters:
-            branches:
-              only:
-                - modal
-    jobs:
-      - hadolint
-      - build-kalilinux:
-          requires:
-            - hadolint
