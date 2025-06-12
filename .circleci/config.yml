@@ -32,13 +32,8 @@ jobs:
           name: "Build and push multi-architecture image"
           command: |
             echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin $DOCKER_REGISTRY
-            export DOCKER_CLI_EXPERIMENTAL=enabled
-            docker context create buildx-build
-            docker buildx create --use buildx-build
-            docker buildx build --push \
-              --tag $DOCKER_REGISTRY/$REGISTRY_USER/kalilinux-docker:modal \
-              --platform linux/amd64,linux/arm64 \
-              -f Dockerfile .
+            docker build -t $DOCKER_REGISTRY/$REGISTRY_USER/kalilinux-docker:modal -f Dockerfile .
+            docker push $DOCKER_REGISTRY/$REGISTRY_USER/kalilinux-docker:modal
 
 workflows:
   build-auto:
